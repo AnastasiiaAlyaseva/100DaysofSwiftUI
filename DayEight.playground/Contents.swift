@@ -128,3 +128,38 @@ do{
 } catch {
     print("Unknown error")
 }
+
+//Write a function that takes a string as input and returns its length. If the string is empty, the function should generate an error.
+
+enum ErrorTipe : Error {
+    case empty
+}
+
+func checkLine(word: String) throws -> Int {
+    if word.count == 0 {
+        throw ErrorTipe.empty
+    }
+    return word.count
+}
+
+do {
+    let result2 = try checkLine(word: "")
+    print("Length of the string is \(result2)")
+} catch ErrorTipe.empty{
+    print("The string is empty")
+} catch {
+    print("Unknown error")
+}
+
+//Write a function that takes two numbers as input and returns their sum. The function should generate an error if one of the numbers is negative.
+
+enum PossibleError : Error {
+    case negativeNumber
+}
+
+func sumOfNumbers(a: Int, b: Int) throws -> Int {
+    if a <= 0 || b <= 0 {
+        throw PossibleError.negativeNumber
+    }
+    return a + b
+}
