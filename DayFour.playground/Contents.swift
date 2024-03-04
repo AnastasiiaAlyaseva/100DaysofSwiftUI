@@ -21,6 +21,11 @@ print(username)
 // Checkpoint 2
 // Create an array of strings, then write some code that prints the number of items in the array and also the number of unique items in the array.
 
+/*
+ ["Apple", "Melon", "Orange", "Mango", "Banana", "Orange", "Melon"] -> result 7 and unique -> 5
+ 
+ */
+
 let fruits: [String] = ["Apple", "Melon", "Orange", "Mango", "Banana", "Orange", "Melon"]
 print("There are \(fruits.count) elements in this array")
 let setFruit: Set = Set(fruits)
