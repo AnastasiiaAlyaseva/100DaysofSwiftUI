@@ -94,7 +94,6 @@ struct Car {
             print("Not changed.Gear remains at \(currentGear)")
         }
     }
-    
     mutating func changeGearUp() {
         if currentGear < 10 {
             currentGear += 1
