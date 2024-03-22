@@ -2,6 +2,30 @@
 
 import SwiftUI
 
+struct FlagImage: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 20)
+            .background(.regularMaterial)
+            .clipShape(.rect(cornerRadius: 20))
+    }
+}
+
+struct Title: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle.bold())
+            .foregroundStyle(.white)
+    }
+}
+
+extension View {
+    func titleStyle() -> some View {
+        modifier(Title())
+    }
+}
+
 struct ContentView: View {
     @State private var showingScore = false
     @State private var showingFinalScore = false
@@ -24,8 +48,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Text("Guess the Flag")
-                    .font(.largeTitle.bold())
-                    .foregroundStyle(.white)
+                    .titleStyle()
                 
                 VStack(spacing: 15) {
                     VStack {
@@ -47,17 +70,13 @@ struct ContentView: View {
                         }
                     }
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 20)
-                .background(.regularMaterial)
-                .clipShape(.rect(cornerRadius: 20))
+                .modifier(FlagImage())
                 
                 Spacer()
                 Spacer()
                 
                 Text("Score: \(currentScore)")
-                    .font(.title.bold())
-                    .foregroundStyle(.white)
+                    .titleStyle()
                 
                 Spacer()
             }
