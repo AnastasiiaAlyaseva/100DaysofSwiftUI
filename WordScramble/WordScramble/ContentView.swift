@@ -10,8 +10,13 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
     
-    
-    
+    private var score: Int {
+        var result = 0
+        for word in usedWords {
+            result += word.count
+        }
+        return result
+    }
     
     var body: some View {
         NavigationStack{
@@ -28,6 +33,8 @@ struct ContentView: View {
                             Text(word)
                         }
                     }
+                } header: {
+                    Text("Your score: \(score)")
                 }
             }
             .navigationTitle(rootWord)
@@ -37,6 +44,9 @@ struct ContentView: View {
                 Button("Ok") {}
             } message: {
                 Text(errorMessage)
+            }
+            .toolbar {
+                Button("New game", action: newGame)
             }
         }
     }
@@ -57,6 +67,11 @@ struct ContentView: View {
         
         guard isReal(word: answer) else {
             wordError(title: "Word not recognized", message: "You can't just make them up, you know")
+            return
+        }
+        
+        guard isShort(word: answer) else {
+            wordError(title: "Word too short", message: "Word must be at least three letters")
             return
         }
         
@@ -100,10 +115,25 @@ struct ContentView: View {
         return misspelledRange.location == NSNotFound
     }
     
+    func isShort(word: String) -> Bool {
+        return word.count >= 3
+    }
+    
     func wordError(title: String, message: String) {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    func newGame() {
+        usedWords = [String]()
+        newWord = ""
+        rootWord = ""
+        errorTitle = ""
+        errorMessage = ""
+        showingError = false
+        startGame()
+        
     }
 }
 
