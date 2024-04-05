@@ -34,6 +34,7 @@ struct ContentView: View {
     @State private var correctAnswer = Int.random(in: 0...2)
     @State private var currentScore = 0
     @State private var questionCount = 0
+    @State private var selectedFlag = -1
     
     
     var body: some View {
@@ -67,6 +68,10 @@ struct ContentView: View {
                             Image(countries[number])
                                 .clipShape(.capsule)
                                 .shadow(radius: 5)
+                                .rotation3DEffect(.degrees(selectedFlag == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
+                                .animation(.default, value: selectedFlag)
+                                .opacity(selectedFlag == -1 || selectedFlag == number ? 1 : 0.3)
+                                .scaleEffect(selectedFlag == -1 || selectedFlag == number ? 1 : 0.5)
                         }
                     }
                 }
@@ -102,6 +107,7 @@ struct ContentView: View {
             scoreTitle = "Wrong! That's tha flag of \(countries[number])"
         }
         showingScore = true
+        selectedFlag = number
         questionCount += 1
     }
     
@@ -109,6 +115,7 @@ struct ContentView: View {
         if questionCount < 8 {
             countries.shuffle()
             correctAnswer = Int.random(in: 0...2)
+            selectedFlag = -1
         } else {
             showingFinalScore = true
         }
