@@ -86,7 +86,6 @@ struct ContentView: View {
                     .settingsViewStyle()
                     
                     Spacer()
-                    
                 }
                 
                 VStack{
@@ -111,14 +110,14 @@ struct ContentView: View {
                                 .scaleEffect(2)
                                 .foregroundColor(.black)
                         }
-                        
                     }
                     
                     Spacer()
+                    
                     Image(animal[element])
                         .clipShape(.circle)
                         .shadow(radius: 10)
-                        .rotation3DEffect(.degrees(animationAmount),axis: /*@START_MENU_TOKEN@*/(x: 0.0, y: 1.0, z: 0.0)/*@END_MENU_TOKEN@*/)
+                        .rotation3DEffect(.degrees(animationAmount),axis: (x: 0.0, y: 1.0, z: 0.0))
                         .animation(.default, value: imageAnimation)
                         .opacity(questionCount == question ? 0.3 : 1)
                     
@@ -127,10 +126,8 @@ struct ContentView: View {
                     Text("Score: \(currentScore)")
                         .font(.title).bold()
                     
-                    
                 }
                 .padding()
-                
                 
             }
             .navigationTitle("Multiply and Win")
