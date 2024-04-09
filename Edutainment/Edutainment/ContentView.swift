@@ -2,6 +2,37 @@
 
 import SwiftUI
 
+struct SettingsView: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 20)
+            .background(.regularMaterial)
+            .clipShape(.rect(cornerRadius: 20))
+    }
+}
+
+extension View {
+    func settingsViewStyle() -> some View {
+        modifier(SettingsView())
+    }
+}
+
+struct Title: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.secondary)
+            .font(.subheadline.weight(.heavy))
+    }
+}
+
+extension View{
+    func titleSecondaryStyle() -> some View {
+        modifier(Title())
+    }
+}
+
+
 struct ContentView: View {
     @State private var multiplicationNumber = 6
     @State private var question = 10
@@ -15,12 +46,14 @@ struct ContentView: View {
     @State private var scoreMessage = ""
     @State private var showingScore = false
     @State private var showingFinalScore = false
+    @State private var imageAnimation = false
+    @State private var animationAmount = 0.0
     
     
     let questions = [5, 10, 20]
     let animal = ["Cat", "Chick", "Dog", "Fox", "Kitty", "Mice", "Rabbit"].shuffled()
     
-   
+    
     
     var body: some View {
         NavigationStack {
@@ -31,17 +64,16 @@ struct ContentView: View {
                 
                 
                 VStack(spacing: 15){
+                    
                     VStack {
                         Text("Chose time table between 2 and 12")
-                            .foregroundStyle(.secondary)
-                            .font(.subheadline.weight(.heavy))
+                            .titleSecondaryStyle()
                         
                         Stepper("\(multiplicationNumber)", value: $multiplicationNumber, in: 2...12, step: 1)
                             .frame(maxWidth: 200)
                         
                         Text("How many questions do you want?")
-                            .foregroundStyle(.secondary)
-                            .font(.subheadline.weight(.heavy))
+                            .titleSecondaryStyle()
                         
                         Picker("", selection: $question) {
                             ForEach(questions, id: \.self) {
@@ -51,50 +83,51 @@ struct ContentView: View {
                         .pickerStyle(SegmentedPickerStyle())
                         .frame(maxWidth: 200)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
-                    .background(.regularMaterial)
-                    .clipShape(.rect(cornerRadius: 20))
+                    .settingsViewStyle()
                     
                     Spacer()
-                    }
+                    
+                }
                 
                 VStack{
                     Spacer()
                     Spacer()
-                   
-                    
-                    Image(animal[element])
-                        .clipShape(.circle)
-                        .shadow(radius: 10)
-                    
-                    Spacer()
                     
                     Text("Calculate how much is \(multiplicationNumber) x \(number) ?")
                         .font(.title2).bold()
-                   
+                    
                     HStack{
                         TextField("Answer", value: $answer, format: .number)
+                            .keyboardType(.numberPad)
                             .foregroundColor(answer == correctAnswer ? .black : .red)
                             .textFieldStyle(.roundedBorder)
                             .onSubmit{checkAnswer()}
-                            
+                        
                         
                         Button(){
                             checkAnswer()
                         } label: {
-                        Image(systemName: "chevron.right.square.fill")
-                            .scaleEffect(2)
-                            .foregroundColor(.black)
+                            Image(systemName: "chevron.right.square.fill")
+                                .scaleEffect(2)
+                                .foregroundColor(.black)
                         }
-
+                        
                     }
-
+                    
+                    Spacer()
+                    Image(animal[element])
+                        .clipShape(.circle)
+                        .shadow(radius: 10)
+                        .rotation3DEffect(.degrees(animationAmount),axis: /*@START_MENU_TOKEN@*/(x: 0.0, y: 1.0, z: 0.0)/*@END_MENU_TOKEN@*/)
+                        .animation(.default, value: imageAnimation)
+                        .opacity(questionCount == question ? 0.3 : 1)
+                    
                     Spacer()
                     
                     Text("Score: \(currentScore)")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).bold()
-                       
+                        .font(.title).bold()
+                    
+                    
                 }
                 .padding()
                 
@@ -105,18 +138,18 @@ struct ContentView: View {
                 Button("New game"){
                     restartGame()
                 }
-               
             }
+            
             .alert(scoreTitle, isPresented: $showingScore) {
                 Button("Continue", action: askQuestion)
             } message: {
-                    Text(scoreMessage)
+                Text(scoreMessage)
             }
             .alert("Finale Score", isPresented: $showingFinalScore) {
                 Button("New game", action: restartGame)
             } message: {
-                    Text("Congratulations! You answered \(questionCount) questions and got \(currentScore) score!")
-                }
+                Text("Congratulations! You answered \(questionCount) questions and got \(currentScore) score!")
+            }
         }
     }
     
@@ -126,6 +159,8 @@ struct ContentView: View {
             currentScore += 1
             scoreTitle = "Good job!"
             scoreMessage = "You score is \(currentScore)"
+            animationAmount = 360
+            imageAnimation = true
             
         } else {
             scoreTitle = "Oh no!"
@@ -136,6 +171,8 @@ struct ContentView: View {
     }
     
     func askQuestion() {
+        animationAmount = 0
+        imageAnimation = false
         correctAnswer = 0
         answer = 0
         if questionCount < question {
@@ -154,6 +191,9 @@ struct ContentView: View {
         questionCount = 0
         scoreTitle = ""
         scoreMessage = ""
+        imageAnimation = false
+        animationAmount = 0.0
+        element = Int.random(in: 0..<animal.count)
     }
 }
 
