@@ -3,35 +3,30 @@
 import SwiftUI
 
 struct AmountStyle : ViewModifier {
-    var amount: Double
+    let expenseItem: ExpenseItem
     
     func body(content: Content) -> some View {
-        var foregroundColor = Color.black
-        if amount < 10 {
-            foregroundColor = Color.green
-        } else if amount == 10 || amount < 100 {
-            foregroundColor = Color.blue
-        } else {
-            foregroundColor = Color.purple
+        switch expenseItem.amount {
+        case 0..<10:
+            content
+                .foregroundColor(.green)
+        case 10..<100:
+            content
+                .foregroundColor(.blue)
+        default:
+            content
+                .foregroundColor(.purple)
         }
-        return content
-            .foregroundColor(foregroundColor)
+        
     }
 }
     
     extension View {
-        func amountStyle(_ amount: Double) -> some View {
-            modifier(AmountStyle(amount: amount))
+        func amountStyle(_ expenseItem: ExpenseItem) -> some View {
+            modifier(AmountStyle(expenseItem: expenseItem))
         }
     }
-    
 
-struct ExpenseItem: Identifiable, Codable {
-    var id = UUID()
-    let name: String
-    let type: String
-    let amount: Double
-}
 
 @Observable
 class Expenses {
@@ -57,11 +52,18 @@ struct ContentView: View {
     @State private var expenses = Expenses()
     @State private var showingAddExpense = false
     
+    var personalItems: [ExpenseItem] {
+        expenses.items.filter { $0.type == "Personal" }
+    }
+    var businessItems: [ExpenseItem] {
+        expenses.items.filter { $0.type == "Business" }
+        }
+    
     var body: some View {
         NavigationStack {
             List {
                 Section{
-                    ForEach(expenses.items.filter{ $0.type == "Personal"}) { item in
+                    ForEach(personalItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(item.name)
@@ -70,15 +72,15 @@ struct ContentView: View {
                             }
                             Spacer()
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .amountStyle(item.amount)
+                                .amountStyle(item)
                                 
                         }
                     }
-                    .onDelete(perform: removeItems)
+                    .onDelete(perform: removePersonalItems)
                 }
                 
                 Section{
-                    ForEach(expenses.items.filter{ $0.type == "Business"}) { item in
+                    ForEach(businessItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(item.name)
@@ -87,11 +89,11 @@ struct ContentView: View {
                             }
                             Spacer()
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .amountStyle(item.amount)
+                                .amountStyle(item)
                                 
                         }
                     }
-                    .onDelete(perform: removeItems)
+                    .onDelete(perform: removeBusinessItems)
                 }
             }
             .navigationTitle("iExpense")
@@ -106,8 +108,24 @@ struct ContentView: View {
         }
     }
     
-    func removeItems(at offsets: IndexSet){
-        expenses.items.remove(atOffsets: offsets)
+    func removeItems(at offsets: IndexSet, in inputArray: [ExpenseItem]) {
+        var objectToDelete = IndexSet()
+        
+        for offset in offsets {
+            let item = inputArray[offset]
+            if let index = expenses.items.firstIndex(of: item){
+                objectToDelete.insert(index)
+            }
+        }
+        expenses.items.remove(atOffsets: objectToDelete)
+    }
+    
+    func removePersonalItems(at offsets: IndexSet) {
+        removeItems(at: offsets, in: personalItems)
+    }
+    
+    func removeBusinessItems(at offsets: IndexSet) {
+        removeItems(at: offsets, in: businessItems)
     }
 }
 

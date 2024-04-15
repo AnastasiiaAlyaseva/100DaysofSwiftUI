@@ -12,6 +12,7 @@
 		B5A3A12D2BC9743400C0F495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A3A12C2BC9743400C0F495 /* Assets.xcassets */; };
 		B5A3A1302BC9743400C0F495 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A3A12F2BC9743400C0F495 /* Preview Assets.xcassets */; };
 		B5A3A1372BC9803000C0F495 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A3A1362BC9803000C0F495 /* AddView.swift */; };
+		B5FA406B2BCD7F2100102334 /* ExpenseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA406A2BCD7F2100102334 /* ExpenseItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		B5A3A12C2BC9743400C0F495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5A3A12F2BC9743400C0F495 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B5A3A1362BC9803000C0F495 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		B5FA406A2BCD7F2100102334 /* ExpenseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +55,9 @@
 		B5A3A1272BC9743300C0F495 /* iExpense */ = {
 			isa = PBXGroup;
 			children = (
-				B5A3A1282BC9743300C0F495 /* iExpenseApp.swift */,
 				B5A3A12A2BC9743300C0F495 /* ContentView.swift */,
+				B5A3A1282BC9743300C0F495 /* iExpenseApp.swift */,
+				B5FA406A2BCD7F2100102334 /* ExpenseItem.swift */,
 				B5A3A1362BC9803000C0F495 /* AddView.swift */,
 				B5A3A12C2BC9743400C0F495 /* Assets.xcassets */,
 				B5A3A12E2BC9743400C0F495 /* Preview Content */,
@@ -143,6 +146,7 @@
 				B5A3A12B2BC9743300C0F495 /* ContentView.swift in Sources */,
 				B5A3A1292BC9743300C0F495 /* iExpenseApp.swift in Sources */,
 				B5A3A1372BC9803000C0F495 /* AddView.swift in Sources */,
+				B5FA406B2BCD7F2100102334 /* ExpenseItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
