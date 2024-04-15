@@ -34,7 +34,9 @@ struct AddView: View {
                         expenses.items.append(item)
                         dismiss()
                     }
+                    .disabled(name.isEmpty || amount == 0)
                 }
+                
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()

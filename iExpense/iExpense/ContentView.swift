@@ -20,12 +20,12 @@ struct AmountStyle : ViewModifier {
         
     }
 }
-    
-    extension View {
-        func amountStyle(_ expenseItem: ExpenseItem) -> some View {
-            modifier(AmountStyle(expenseItem: expenseItem))
-        }
+
+extension View {
+    func amountStyle(_ expenseItem: ExpenseItem) -> some View {
+        modifier(AmountStyle(expenseItem: expenseItem))
     }
+}
 
 
 @Observable
@@ -57,7 +57,7 @@ struct ContentView: View {
     }
     var businessItems: [ExpenseItem] {
         expenses.items.filter { $0.type == "Business" }
-        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -73,7 +73,6 @@ struct ContentView: View {
                             Spacer()
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                 .amountStyle(item)
-                                
                         }
                     }
                     .onDelete(perform: removePersonalItems)
@@ -90,7 +89,6 @@ struct ContentView: View {
                             Spacer()
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                 .amountStyle(item)
-                                
                         }
                     }
                     .onDelete(perform: removeBusinessItems)
@@ -98,8 +96,14 @@ struct ContentView: View {
             }
             .navigationTitle("iExpense")
             .toolbar {
-                Button("Add Expense", systemImage: "plus") {
-                    showingAddExpense = true
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Add Expense", systemImage: "plus") {
+                        showingAddExpense = true
+                    }
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    EditButton()
                 }
             }
             .sheet(isPresented: $showingAddExpense){
