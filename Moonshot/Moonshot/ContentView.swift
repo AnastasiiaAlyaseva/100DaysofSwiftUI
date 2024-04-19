@@ -39,11 +39,10 @@ struct ContentView: View {
                             }
                             .clipShape(.rect(cornerRadius: 10))
                             .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.lightBackground)
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(.lightBackground)
                             )
                         }
-                        
                     }
                 }
                 .padding([.horizontal, .bottom])

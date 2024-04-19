@@ -48,7 +48,7 @@ struct MissionView: View {
                     HStack {
                         ForEach(crew, id: \.role) { crewMember in
                             NavigationLink{
-                                Text("Astronaut details")
+                                AstronautView(astronaut: crewMember.astronaut)
                             } label: {
                                 HStack{
                                     Image(crewMember.astronaut.id)
@@ -69,7 +69,6 @@ struct MissionView: View {
                                 }
                                 .padding(.horizontal)
                             }
-                            
                         }
                     }
                 }
@@ -95,8 +94,8 @@ struct MissionView: View {
 
 #Preview {
     let missions: [Mission] = Bundle.main.decode("missions.json")
-        let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-
-        return MissionView(mission: missions[0], astronauts: astronauts)
-            .preferredColorScheme(.dark)
+    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    
+    return MissionView(mission: missions[0], astronauts: astronauts)
+        .preferredColorScheme(.dark)
 }
