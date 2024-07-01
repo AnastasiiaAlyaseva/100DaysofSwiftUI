@@ -97,8 +97,8 @@ struct ContentView: View {
             .navigationTitle("iExpense")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add Expense", systemImage: "plus") {
-                        showingAddExpense = true
+                    NavigationLink(destination: AddView(expenses: expenses)) {
+                        Label("Add Expense", systemImage: "plus")
                     }
                 }
                 

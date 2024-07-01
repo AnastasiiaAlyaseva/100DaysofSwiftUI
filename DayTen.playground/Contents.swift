@@ -41,6 +41,7 @@ var sergay = Employee(name: "Sergay")
 sergay.takeVacation(days: 5)
 print(sergay.vacationRemaining)
 
+//
 
 // How to compute property values dynamically
 
@@ -178,5 +179,4 @@ struct Message {
 }
 let message = Message()
 print(message)
-
 

@@ -69,7 +69,7 @@ do {
   let string1 = try decoder.decode(String.self, from: data)
 } catch is DecodingError {
   print("something went wrong while decoding!")
-} catch { error
+} catch {
   print("something went wrong!")
   print(error)
 }
