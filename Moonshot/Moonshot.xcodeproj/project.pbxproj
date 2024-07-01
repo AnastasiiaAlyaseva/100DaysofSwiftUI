@@ -59,7 +59,6 @@
 		B5F33CB72BCEC9B20062E817 = {
 			isa = PBXGroup;
 			children = (
-				B5E6EF512BD7F89600E13C10 /* ListLayout.swift */,
 				B5F33CC22BCEC9B20062E817 /* Moonshot */,
 				B5F33CC12BCEC9B20062E817 /* Products */,
 			);
@@ -79,6 +78,7 @@
 				B5F33CC32BCEC9B20062E817 /* MoonshotApp.swift */,
 				B5F33CC52BCEC9B20062E817 /* ContentView.swift */,
 				B5E6EF4F2BD7F70300E13C10 /* GridLayout.swift */,
+				B5E6EF512BD7F89600E13C10 /* ListLayout.swift */,
 				B5C0E3182BD2C4BE00C9F79D /* AstronautView.swift */,
 				B5C0E3162BD2B43F00C9F79D /* MissionView.swift */,
 				B5E6EF4D2BD7E7D200E13C10 /* CrewView.swift */,
