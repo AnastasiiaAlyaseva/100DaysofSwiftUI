@@ -106,9 +106,6 @@ struct ContentView: View {
                     EditButton()
                 }
             }
-            .sheet(isPresented: $showingAddExpense){
-                AddView(expenses: expenses)
-            }
         }
     }
     
