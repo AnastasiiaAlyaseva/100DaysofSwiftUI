@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct CheckoutView: View {
-    var order: Order
+    @ObservedObject var order: Order
 
     @State private var confirmationMessage = ""
     @State private var showingConfirmation = false
