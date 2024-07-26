@@ -31,6 +31,12 @@ struct DetailView: View {
                 .foregroundStyle(.secondary)
             Text(book.review)
                 .padding()
+            Text("Added on \(book.date, format: .dateTime.day().month().year())")
+                .font(.footnote)
+                .padding(4)
+                .foregroundStyle(.white)
+                .background(.secondary)
+                .clipShape(.capsule)
             RatingView(rating: .constant(book.rating))
                 .font(.largeTitle)
             

@@ -16,11 +16,16 @@ struct ContentView: View {
             List {
                 ForEach(books) { book in
                     NavigationLink(value: book) {
-                        VStack(alignment: .leading) {
-                            Text(book.title)
-                                .font(.title)
-                            Text(book.author)
-                                .foregroundStyle(.secondary)
+                        HStack {
+                            Text("📚")
+                                .font(.largeTitle)
+                            
+                            VStack(alignment: .leading) {
+                                Text(book.title)
+                                    .font(.title)
+                                Text(book.author)
+                                    .foregroundColor(book.rating == 1 ? .red.opacity(0.7) : .secondary)
+                            }
                         }
                     }
                 }
