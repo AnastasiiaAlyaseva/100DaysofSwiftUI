@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B51391E02C5B9C6E000CCBC5 /* AmountStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51391DF2C5B9C6E000CCBC5 /* AmountStyle.swift */; };
+		B51391E22C5BC77F000CCBC5 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51391E12C5BC77F000CCBC5 /* UsersView.swift */; };
 		B5A3A1292BC9743300C0F495 /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A3A1282BC9743300C0F495 /* iExpenseApp.swift */; };
 		B5A3A12B2BC9743300C0F495 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A3A12A2BC9743300C0F495 /* ContentView.swift */; };
 		B5A3A12D2BC9743400C0F495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A3A12C2BC9743400C0F495 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B51391DF2C5B9C6E000CCBC5 /* AmountStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountStyle.swift; sourceTree = "<group>"; };
+		B51391E12C5BC77F000CCBC5 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		B5A3A1252BC9743300C0F495 /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A3A1282BC9743300C0F495 /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
 		B5A3A12A2BC9743300C0F495 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,8 +61,10 @@
 			children = (
 				B5A3A1282BC9743300C0F495 /* iExpenseApp.swift */,
 				B5A3A12A2BC9743300C0F495 /* ContentView.swift */,
+				B51391E12C5BC77F000CCBC5 /* UsersView.swift */,
 				B5FA406A2BCD7F2100102334 /* ExpenseItem.swift */,
 				B5A3A1362BC9803000C0F495 /* AddView.swift */,
+				B51391DF2C5B9C6E000CCBC5 /* AmountStyle.swift */,
 				B5A3A12C2BC9743400C0F495 /* Assets.xcassets */,
 				B5A3A12E2BC9743400C0F495 /* Preview Content */,
 			);
@@ -147,6 +153,8 @@
 				B5A3A1292BC9743300C0F495 /* iExpenseApp.swift in Sources */,
 				B5A3A1372BC9803000C0F495 /* AddView.swift in Sources */,
 				B5FA406B2BCD7F2100102334 /* ExpenseItem.swift in Sources */,
+				B51391E02C5B9C6E000CCBC5 /* AmountStyle.swift in Sources */,
+				B51391E22C5BC77F000CCBC5 /* UsersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

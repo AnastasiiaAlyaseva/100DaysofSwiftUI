@@ -1,16 +1,17 @@
 
-
 import SwiftUI
+import SwiftData
 
 struct AddView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     
     @State private var name = "Add new expense"
     @State private var type = "Personal"
     @State private var amount = 0.0
     
-    let types = ["Personale" , "Business"]
-    var expenses: Expenses
+    let types = ["Personal" , "Business"]
+    @Query var expenses: [ExpenseItem]
     
     var body: some View {
         NavigationStack{
@@ -31,7 +32,7 @@ struct AddView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save"){
                         let item = ExpenseItem(name: name, type: type, amount: amount)
-                        expenses.items.append(item)
+                        modelContext.insert(item)
                         dismiss()
                     }
                     .disabled(amount == 0)
@@ -49,5 +50,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expenses: Expenses())
+    AddView()
 }

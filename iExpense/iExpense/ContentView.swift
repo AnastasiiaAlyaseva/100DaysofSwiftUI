@@ -1,134 +1,99 @@
 
-
 import SwiftUI
+import SwiftData
 
-struct AmountStyle : ViewModifier {
-    let expenseItem: ExpenseItem
-    
-    func body(content: Content) -> some View {
-        switch expenseItem.amount {
-        case 0..<10:
-            content
-                .foregroundColor(.green)
-        case 10..<100:
-            content
-                .foregroundColor(.blue)
-        default:
-            content
-                .foregroundColor(.purple)
-        }
-        
-    }
-}
-
-extension View {
-    func amountStyle(_ expenseItem: ExpenseItem) -> some View {
-        modifier(AmountStyle(expenseItem: expenseItem))
-    }
-}
-
-
-@Observable
-class Expenses {
-    var items = [ExpenseItem]() {
-        didSet{
-            if let encoder = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.setValue(encoder, forKey: "Items")
-            }
-        }
-    }
-    init() {
-        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
-            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
-                items = decodedItems
-                return
-            }
-        }
-        items = []
-    }
-}
+//
+//@Observable
+//class Expenses {
+//    var items = [ExpenseItem]() {
+//        didSet{
+//            if let encoder = try? JSONEncoder().encode(items) {
+//                UserDefaults.standard.setValue(encoder, forKey: "Items")
+//            }
+//        }
+//    }
+//    init() {
+//        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
+//            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
+//                items = decodedItems
+//                return
+//            }
+//        }
+//        items = []
+//    }
+//}
 
 struct ContentView: View {
-    @State private var expenses = Expenses()
-    @State private var showingAddExpense = false
+    @Environment(\.modelContext) var modelContext
+    @Query var expenses: [ExpenseItem]
     
-    var personalItems: [ExpenseItem] {
-        expenses.items.filter { $0.type == "Personal" }
-    }
-    var businessItems: [ExpenseItem] {
-        expenses.items.filter { $0.type == "Business" }
-    }
+    @State private var showingTypeOnly = false
+    @State private var showingAddExpense = false
+    @State private var sortOrder = [
+        SortDescriptor(\ExpenseItem.name),
+        SortDescriptor(\ExpenseItem.amount)
+    ]
+    
+    //    var personalItems: [ExpenseItem] {
+    //        expenses.items.filter { $0.type == "Personal" }
+    //    }
+    //    var businessItems: [ExpenseItem] {
+    //        expenses.items.filter { $0.type == "Business" }
+    //    }
     
     var body: some View {
         NavigationStack {
-            List {
-                Section{
-                    ForEach(personalItems) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.type)
-                            }
-                            Spacer()
-                            Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .amountStyle(item)
+            UsersView(filter: showingTypeOnly ? "Personal" : "Business", sortOrder: sortOrder)
+                .navigationTitle("iExpense")
+                .toolbar {
+                    
+                    Button("Add Expense", systemImage: "plus"){
+                        showingAddExpense.toggle()
+                    }
+                    
+                    Button(showingTypeOnly ? "Show Personal" : "Show All") {
+                        showingTypeOnly.toggle()
+                    }
+                    
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $sortOrder) {
+                            Text("Sort by Name")
+                                .tag([SortDescriptor(\ExpenseItem.name), SortDescriptor(\ExpenseItem.amount)])
+                            
+                            Text("Sort by Amount")
+                                .tag([SortDescriptor(\ExpenseItem.amount), SortDescriptor(\ExpenseItem.name)])
                         }
                     }
-                    .onDelete(perform: removePersonalItems)
-                }
-                
-                Section{
-                    ForEach(businessItems) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.type)
-                            }
-                            Spacer()
-                            Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .amountStyle(item)
-                        }
-                    }
-                    .onDelete(perform: removeBusinessItems)
-                }
-            }
-            .navigationTitle("iExpense")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    NavigationLink(destination: AddView(expenses: expenses)) {
-                        Label("Add Expense", systemImage: "plus")
-                    }
-                }
-                
-                ToolbarItem(placement: .cancellationAction) {
+                    
                     EditButton()
                 }
-            }
+                .sheet(isPresented: $showingAddExpense) {
+                    AddView()
+                }
         }
-    }
-    
-    func removeItems(at offsets: IndexSet, in inputArray: [ExpenseItem]) {
-        var objectToDelete = IndexSet()
-        
-        for offset in offsets {
-            let item = inputArray[offset]
-            if let index = expenses.items.firstIndex(of: item){
-                objectToDelete.insert(index)
-            }
-        }
-        expenses.items.remove(atOffsets: objectToDelete)
-    }
-    
-    func removePersonalItems(at offsets: IndexSet) {
-        removeItems(at: offsets, in: personalItems)
-    }
-    
-    func removeBusinessItems(at offsets: IndexSet) {
-        removeItems(at: offsets, in: businessItems)
     }
 }
+
+//    func removeItems(at offsets: IndexSet, in inputArray: [ExpenseItem]) {
+//        var objectToDelete = IndexSet()
+//
+//        for offset in offsets {
+//            let item = inputArray[offset]
+//            if let index = expenses.items.firstIndex(of: item){
+//                objectToDelete.insert(index)
+//            }
+//        }
+//        expenses.items.remove(atOffsets: objectToDelete)
+//    }
+//
+//    func removePersonalItems(at offsets: IndexSet) {
+//        removeItems(at: offsets, in: personalItems)
+//    }
+//
+//    func removeBusinessItems(at offsets: IndexSet) {
+//        removeItems(at: offsets, in: businessItems)
+//    }
+//}
 
 #Preview {
     ContentView()
