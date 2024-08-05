@@ -1,11 +1,10 @@
 
-
+import SwiftData
 import SwiftUI
 
 struct UserDetailView: View {
     let user: User
     let allUsers: [User]
-    
     
     var body: some View {
         VStack {
