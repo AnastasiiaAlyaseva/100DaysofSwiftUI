@@ -14,16 +14,17 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(users) { user in
-                NavigationLink(destination: UserDetailView(user: user)) {
+                NavigationLink(destination: UserDetailView(user: user, allUsers: users)) {
                     HStack {
+                        Image(systemName: "person.crop.circle")
+                            .foregroundColor(user.isActive ? .green : .gray)
+                            .font(.system(size: 15))
+                        
                         VStack(alignment: .leading) {
                             Text(user.name)
                                 .font(.headline)
                             Text(user.isActive ? "Active" : "Inactiv")
                         }
-                        Spacer()
-                        
-                        Text(user.isActive ? "🟢" : "🔴")
                     }
                 }
             }
@@ -36,7 +37,7 @@ struct ContentView: View {
     
     func loadData() async {
         guard users.isEmpty else { return }
-       
+        
         do {
             guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
                 print("Invalid URL")
