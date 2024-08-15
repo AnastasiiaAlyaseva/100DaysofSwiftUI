@@ -9,6 +9,9 @@ import StoreKit
 struct ContentView: View {
     @State private var processedImage: Image?
     @State private var filterIntensity = 0.5
+    @State private var filterRadius = 0.5
+    @State private var filterScale = 0.5
+    @State private var filterSaturation = 0.5
     @State private var selectedItem: PhotosPickerItem?
     @State private var showingFilters = false
     
@@ -36,16 +39,58 @@ struct ContentView: View {
             
             Spacer()
             
-            HStack {
-                Text("Intensity")
-                Slider(value: $filterIntensity)
-                    .onChange(of: filterIntensity, applyProcessing)
+            
+            VStack {
+                
+                if currentFilter.inputKeys.contains(kCIInputIntensityKey) {
+                    HStack {
+                        Text("Intensity")
+                        Slider(value: $filterIntensity)
+                            .onChange(of: filterIntensity, applyProcessing)
+                    }
+                    .padding(.vertical)
+                }
+                
+                if currentFilter.inputKeys.contains(kCIInputRadiusKey) {
+                    HStack {
+                        Text("Radius")
+                        Slider(value: $filterRadius)
+                            .onChange(of: filterRadius, applyProcessing)
+                    }
+                    .padding(.vertical)
+                }
+                
+                if currentFilter.inputKeys.contains(kCIInputScaleKey) {
+                    HStack {
+                        Text("Scale")
+                        Slider(value: $filterScale)
+                            .onChange(of: filterScale, applyProcessing)
+                    }
+                    .padding(.vertical)
+                }
+                
+                if currentFilter.inputKeys.contains(kCIInputSaturationKey) {
+                    HStack {
+                        Text("Saturation")
+                        Slider(value: $filterSaturation)
+                            .onChange(of: filterSaturation, applyProcessing)
+                    }
+                    .padding(.vertical)
+                }
             }
-            .padding(.vertical)
+            .disabled(processedImage == nil)
+            
+            //            HStack {
+            //                Text("Intensity")
+            //                Slider(value: $filterIntensity)
+            //                    .onChange(of: filterIntensity, applyProcessing)
+            //                    .disabled(processedImage == nil)
+            //            }
+            
             
             HStack {
                 Button("Change Filter", action: changeFilter)
-                
+                    .disabled(processedImage == nil)
                 Spacer()
                 
                 if let processedImage {
@@ -63,6 +108,9 @@ struct ContentView: View {
             Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
             Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
             Button("Vignette") { setFilter(CIFilter.vignette()) }
+            Button("Color Controls") { setFilter(CIFilter.colorControls()) }
+            Button("Color Monochrome") { setFilter(CIFilter.colorMonochrome()) }
+            Button("Gloom") {  setFilter(CIFilter.gloom()) }
             Button("Cancel", role: .cancel) { }
         }
     }
@@ -85,8 +133,10 @@ struct ContentView: View {
         let inputKeys = currentFilter.inputKeys
         
         if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey) }
-        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterIntensity * 200, forKey: kCIInputRadiusKey)}
-        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterIntensity * 10, forKey: kCIInputScaleKey) }
+        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterRadius * 200, forKey: kCIInputRadiusKey)}
+        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterScale * 10, forKey: kCIInputScaleKey) }
+        if inputKeys.contains(kCIInputSaturationKey) {
+            currentFilter.setValue(filterSaturation * 10  , forKey: kCIInputSaturationKey) }
         
         guard let outputImage = currentFilter.outputImage else { return }
         guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return }
@@ -99,7 +149,7 @@ struct ContentView: View {
         loadImage()
         
         filterCount += 1
-        if filterCount >= 3 {
+        if filterCount >= 20 {
             requestReview()
         }
     }
