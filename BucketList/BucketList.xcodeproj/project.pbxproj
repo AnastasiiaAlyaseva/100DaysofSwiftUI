@@ -14,6 +14,7 @@
 		B55EDB7B2C73A691001AA21E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55EDB7A2C73A691001AA21E /* Location.swift */; };
 		B573A0532C74D00D00A9DC98 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B573A0522C74D00D00A9DC98 /* EditView.swift */; };
 		B573A0552C74DA9400A9DC98 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B573A0542C74DA9400A9DC98 /* Result.swift */; };
+		B573A0572C74FEFA00A9DC98 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B573A0562C74FEFA00A9DC98 /* ContentView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		B55EDB7A2C73A691001AA21E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B573A0522C74D00D00A9DC98 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		B573A0542C74DA9400A9DC98 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		B573A0562C74FEFA00A9DC98 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				B55EDB6E2C73A444001AA21E /* ContentView.swift */,
 				B573A0542C74DA9400A9DC98 /* Result.swift */,
 				B573A0522C74D00D00A9DC98 /* EditView.swift */,
+				B573A0562C74FEFA00A9DC98 /* ContentView-ViewModel.swift */,
 				B55EDB7A2C73A691001AA21E /* Location.swift */,
 				B55EDB702C73A447001AA21E /* Assets.xcassets */,
 				B55EDB722C73A447001AA21E /* Preview Content */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B55EDB6F2C73A444001AA21E /* ContentView.swift in Sources */,
+				B573A0572C74FEFA00A9DC98 /* ContentView-ViewModel.swift in Sources */,
 				B573A0552C74DA9400A9DC98 /* Result.swift in Sources */,
 				B55EDB7B2C73A691001AA21E /* Location.swift in Sources */,
 				B573A0532C74D00D00A9DC98 /* EditView.swift in Sources */,

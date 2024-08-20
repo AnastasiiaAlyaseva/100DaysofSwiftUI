@@ -85,7 +85,6 @@ struct EditView: View {
             loadingState = .loaded
         } catch {
             loadingState = .failed
-            print("I'm here")
         }
     }
 }
