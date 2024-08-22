@@ -13,6 +13,8 @@ extension ContentView {
         var selectedPlace: Location?
         var isUnlocked = false
         var mapStyle = true
+        var isShowingAuthenticationAlert = false
+        var authenticationAlertMessage = ""
         
         let savePath = URL.documentsDirectory.appending(path: "SavedPlaces")
         
@@ -60,11 +62,13 @@ extension ContentView {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        // error
+                        self.isShowingAuthenticationAlert = true
+                        self.authenticationAlertMessage = "Authentication unsuccessful"
                     }
                 }
             } else {
-                // no boimetrics
+                self.isShowingAuthenticationAlert = true
+                self.authenticationAlertMessage = "Your device doesn't support biometric authentication"
             }
         }
     }

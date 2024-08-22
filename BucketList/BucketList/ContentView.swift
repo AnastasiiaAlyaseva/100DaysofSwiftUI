@@ -67,6 +67,13 @@ struct ContentView: View {
         } else {
             Button("Unlock Places", action: viewModel.authenticate)
                 .buttonStyle()
+                .alert(isPresented: $viewModel.isShowingAuthenticationAlert) {
+                    Alert(
+                        title: Text("Error!"),
+                        message: Text("\(viewModel.authenticationAlertMessage)"),
+                        dismissButton: .default(Text("Ok"))
+                    )
+                }
         }
     }
 }
