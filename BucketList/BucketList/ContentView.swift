@@ -28,6 +28,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                .mapStyle(viewModel.mapStyle ? .standard : .hybrid(elevation: .realistic))
                 .onTapGesture { position in
                     if let coordinate = proxy.convert(position, from: .local) {
                         viewModel.addLocation(at: coordinate)
@@ -39,12 +40,33 @@ struct ContentView: View {
                     }
                 }
             }
+            
+            HStack {
+                Spacer()
+                
+                Button{
+                    viewModel.mapStyle = true
+                } label: {
+                    Image(systemName: "map")
+                    Text("Standard")
+                }
+                .buttonStyle()
+                
+                Spacer()
+                
+                Button {
+                    viewModel.mapStyle = false
+                } label: {
+                    Image(systemName: "map.fill")
+                    Text("Hybrid")
+                }
+                .buttonStyle()
+                
+                Spacer()
+            }
         } else {
             Button("Unlock Places", action: viewModel.authenticate)
-                .padding()
-                .background(.mint)
-                .foregroundStyle(.white)
-                .clipShape(.capsule)
+                .buttonStyle()
         }
     }
 }
