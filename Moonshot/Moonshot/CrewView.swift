@@ -20,6 +20,7 @@ struct CrewView: View {
                                     Capsule()
                                         .strokeBorder(.white, lineWidth: 1)
                                 )
+                                .accessibilityHidden(true)
                             VStack(alignment: .leading) {
                                 Text(crewMember.astronaut.name)
                                     .foregroundStyle(.white)
@@ -29,6 +30,9 @@ struct CrewView: View {
                             }
                         }
                         .padding(.horizontal)
+                        .accessibilityElement()
+                        .accessibilityLabel("\(crewMember.astronaut.name), \(crewMember.role)")
+                        .accessibilityHint("Double-tap to learn more about this astronaut.")
                     }
                 }
             }
@@ -40,7 +44,7 @@ struct CrewView: View {
     let missions: [Mission] = Bundle.main.decode("missions.json")
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
     let missionView = MissionView(mission: missions[1],
-                                                  astronauts: astronauts)
+                                  astronauts: astronauts)
     
     return CrewView(crew: missionView.crew)
         .preferredColorScheme(.dark)

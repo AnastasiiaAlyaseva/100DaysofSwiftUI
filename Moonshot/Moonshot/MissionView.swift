@@ -21,11 +21,14 @@ struct MissionView: View {
                             width * 0.6
                         }
                         .padding(.top)
+                        .accessibilityHidden(true)
                     
                     Text(mission.formattedLaunchDate)
                         .font(.title3)
                         .foregroundStyle(.secondary)
                         .padding(.top)
+                        .accessibilityHidden(true)
+                    
                     
                     VStack(alignment: .leading) {
                         DividerView()
@@ -43,6 +46,8 @@ struct MissionView: View {
                             .padding(.bottom, 5)
                     }
                     .padding(.horizontal)
+                    .accessibilityElement()
+                    .accessibilityLabel("\(mission.displayName), Launch date: \(mission.formattedLaunchDate). Mission highlights: \(mission.description)")
                     
                     CrewView(crew: crew)
                 }

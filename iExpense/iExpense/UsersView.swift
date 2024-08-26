@@ -20,6 +20,9 @@ struct UsersView: View {
                     Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .amountStyle(item)
                 }
+                .accessibilityElement()
+                .accessibilityLabel("\(item.name), \(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD")) ")
+                .accessibilityHint("Type: \(item.type) expense")
             }
             .onDelete(perform: removeItems)
         }

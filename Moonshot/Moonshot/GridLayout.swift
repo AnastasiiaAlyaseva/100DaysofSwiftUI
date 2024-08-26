@@ -28,7 +28,10 @@ struct GridLayout: View {
                                     Text(mission.formattedLaunchDate)
                                         .font(.caption)
                                         .foregroundStyle(.white.opacity(0.5))
+                                        .accessibilityHidden(true)
                                 }
+                                .accessibilityLabel("\(mission.displayName), \(mission.formattedLaunchDate)")
+                                .accessibilityHint("Double-tap to view mission details.")
                                 .padding(.vertical)
                                 .frame(maxWidth: .infinity)
                                 .background(.lightBackground)

@@ -10,11 +10,14 @@ struct AstronautView: View {
                 Image(astronaut.id)
                     .resizable()
                     .scaledToFit()
+                    .accessibilityHidden(true)
                 
                 Text(astronaut.description)
                     .padding()
             }
         }
+        .accessibilityElement()
+        .accessibilityLabel("\(astronaut.name)'s biography.\(astronaut.description)")
         .background(.darkBackground)
         .navigationTitle(astronaut.name)
         .navigationBarTitleDisplayMode(.inline)

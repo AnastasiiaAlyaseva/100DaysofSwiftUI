@@ -27,6 +27,8 @@ struct ListLayout: View {
                                     .font(.caption)
                                     .foregroundStyle(.white.opacity(0.5))
                             }
+                            .accessibilityLabel("\(mission.displayName), \(mission.formattedLaunchDate)")
+                            .accessibilityHint("Double-tap to view mission details.")
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
                             .background(.lightBackground)
