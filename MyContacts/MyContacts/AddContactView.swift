@@ -1,6 +1,7 @@
 
 import SwiftUI
 import PhotosUI
+import CoreImage
 
 
 struct AddContactView: View {
@@ -12,6 +13,7 @@ struct AddContactView: View {
     @State private var name = ""
     @State private var number = ""
     @State private var notes = ""
+    @State private var photoData: Data?
     
     var body: some View {
         NavigationStack {
@@ -58,6 +60,13 @@ struct AddContactView: View {
     }
     
     func loadImage() {
-        
+        guard let selectedItem else { return }
+         
+        Task{
+            guard let imageData = try await selectedItem.loadTransferable(type: Data.self) else { return }
+            guard let inputImage = UIImage(data: imageData) else { return }
+            processedImage = Image(uiImage: inputImage)
+            
+        }
     }
 }
