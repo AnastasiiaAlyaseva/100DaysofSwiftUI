@@ -9,10 +9,16 @@ struct ProspectsView: View {
     enum FilterType {
         case none, contacted, uncontacted
     }
+    
+    enum SortType {
+        case name, date
+    }
+    
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Prospect.name) var prospects: [Prospect]
+    @Query var prospects: [Prospect]
     @State private var isShowingScanner = false
     @State private var selectedProspects = Set<Prospect>()
+    @State private var sortType: SortType = .name
     
     let filter: FilterType
     
@@ -28,15 +34,24 @@ struct ProspectsView: View {
         }
     }
     
+    
     var body: some View {
         NavigationStack {
             List(prospects, selection: $selectedProspects) { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    
-                    Text(prospect.emailAddress)
-                        .foregroundStyle(.secondary)
+                NavigationLink(destination: ProspectDetailView(prospect: prospect)) {
+                    HStack {
+                        Image(systemName: "person.crop.circle")
+                            .foregroundColor(prospect.isContacted ? .green : .gray)
+                            .font(.system(size: 25))
+                        
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            
+                            Text(prospect.emailAddress)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
                 .swipeActions {
                     Button("Delete", systemImage: "trash", role: .destructive) {
@@ -64,6 +79,14 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Sort", systemImage: "arrow.up.arrow.down.circle"){
+                        Button("Sort by Name") { sortType = .name }
+                        Button("Sort by Most Recent") { sortType = .date }
+                    }
+                }
+                
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Scan", systemImage: "qrcode.viewfinder") {
                         isShowingScanner = true
@@ -131,7 +154,7 @@ struct ProspectsView: View {
             //            dateComponents.hour = 9
             //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             
-            var trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
             center.add(request)
